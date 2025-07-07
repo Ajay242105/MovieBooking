@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import BlurCircle from './BlurCircle';
 import MovieCard from './MovieCard';
+import { dummyShowsData } from '../assets/assets';
 
 const FeaturedSection = () => {
     const navigate = useNavigate();
@@ -16,8 +17,11 @@ const FeaturedSection = () => {
                 </button>
 
             </div>
-            <div>
-                <MovieCard/>
+            <div className='flex flex-wrap max-sm:justify-center max-lg:justify-center gap-8 mt-8 justify-center '>
+                {dummyShowsData.slice(0,4).map((show)=>(
+                <MovieCard key={show.id} movie={show}/>
+
+                ))}
             </div>
             <div className='flex justify-center mt-20'>
                 <button onClick={() => { navigate('/movies');scrollTo(0,0) }}

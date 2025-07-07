@@ -14,7 +14,7 @@ const Navbar = () => {
     //scroll to top
     scrollTo(0, 0);
     setIsOpen(false);
-  };
+   };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
