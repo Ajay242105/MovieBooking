@@ -61,13 +61,16 @@ const MovieDetails = () => {
       </div>
 
       <p className='text-lg font-medium mt-20'>Your Favorite Cast</p>
-      <div className='flex flex-wrap gap-4 mt-4'>
-        {(show.movie.casts || []).map((actor, index) => (
-          <div key={index} className='flex flex-col items-center'>
-            <img src={actor.profile_path} alt={actor.name} className='h-24 w-24 rounded-full object-cover mb-2' />
-            <p className='text-sm text-gray-300'>{actor.name}</p>
-          </div>
-        ))}
+      <div className='overflow-x-auto no-scrollbar mt-8 pb-4'>
+        <div className='flex gap-4 items-center w-max px-4'>
+       
+          {(show.movie.casts.slice(0,12).map((cast, index) => (
+            <div key={index} className='flex flex-col items-center text-center'>
+              <img src={cast.profile_path} alt={cast.name} className='h-20 md:h-20 aspect-square rounded-full object-cover mb-2' />
+              <p className='text-xs font-medium mt-3   text-gray-300'>{cast.name}</p>
+            </div>
+          )))}
+        </div>
       </div>
 
     </div>
