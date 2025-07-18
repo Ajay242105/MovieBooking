@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { dummyDateTimeData, dummyShowsData } from '../assets/assets';
 import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react';
 import BlurCircle from '../components/BlurCircle';
+import { DateSelect } from '../components/DateSelect';
+import MovieCard from '../components/MovieCard';
+import Loading from '../components/Loading';
 
 // Helper function to format runtime as 'Xh Ym'
 function timeFormat(runtime) {
@@ -27,6 +30,8 @@ const MovieDetails = () => {
   useEffect(() => {
     getShow();
   }, [id]);
+
+  const navigate = useNavigate();
 
   return show ? (
     <div className='px-6 md:px-16 lg:px-40 pt-30 md:pt-50'>
@@ -61,24 +66,33 @@ const MovieDetails = () => {
       </div>
 
       <p className='text-lg font-medium mt-20'>Your Favorite Cast</p>
-      <div className='overflow-x-auto no-scrollbar mt-8 pb-4'>
-        <div className='flex gap-4 items-center w-max px-4'>
-       
-          {(show.movie.casts.slice(0,12).map((cast, index) => (
-            <div key={index} className='flex flex-col items-center text-center'>
-              <img src={cast.profile_path} alt={cast.name} className='h-20 md:h-20 aspect-square rounded-full object-cover mb-2' />
-              <p className='text-xs font-medium mt-3   text-gray-300'>{cast.name}</p>
-            </div>
-          )))}
-        </div>
+      <div className='flex flex-wrap gap-4 mt-8 pb-4 mb-10'>
+        {show.movie.casts.slice(0,12).map((cast, index) => (
+          <div key={index} className='flex flex-col items-center text-center'>
+            <img src={cast.profile_path} alt={cast.name} className='h-20 md:h-20 aspect-square rounded-full object-cover mb-2' />
+            <p className='text-xs font-medium mt-3  text-gray-300'>{cast.name}</p>
+          </div>
+        ))}
       </div>
-
+      <DateSelect dateTime={show.dateTime} id={id} />
+      <p className='text-lg font-medium mt-20 mb-20'>You May Also Like</p>
+      <div className='flex flex-wrap gap-8 max-sm:justify-center '>
+        {dummyShowsData.slice(0, 4).map((movie, index) => (
+          <MovieCard key={index} movie={movie} />
+        ))}
+      </div>
+      <div className='flex justify-center mt-20'>
+        <button onClick={() => { navigate('/movies'); scrollTo(0, 0) }}
+          className='px-10 items-center justify-center py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium mb-10 cursor-pointer'>
+          Show More
+        </button>
+      </div>
     </div>
   ) : (
     <div className='flex items-center justify-center h-screen text-gray-300'>
-      <h1 className='text-2xl font-semibold'>Loading...</h1>
+    <Loading />
     </div>
-  )
+  );
 }
 
-export default MovieDetails
+export default MovieDetails;
