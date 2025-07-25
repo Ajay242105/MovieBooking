@@ -1,9 +1,12 @@
+// DateTimeFormat component for consistent date/time display
+
 import React, { useState, useEffect } from 'react'
 import Loading from '../../components/Loading'
 import Title from '../../components/admin/Title'
 import { ChartLineIcon, CircleDollarSignIcon, Currency, PlayCircleIcon, StarIcon, UserIcon } from 'lucide-react';
 import { dummyDashboardData } from '../../assets/assets';
 import BlurCircle from '../../components/BlurCircle';
+import DateTimeFormat from '../../components/DateTimeFormat';
 
 const Dashboard = () => {
   const currency=import.meta.env.VITE_CURRENCY || "₹";
@@ -77,24 +80,16 @@ useEffect(() => {
            {show.movie.title}
          </p>
          <div className='flex items-center justify-between px-2'>
-          
             <p className='text-lg font-medium'>{currency} {show.showPrice}</p>
-          <p className='flex items-center gap-1 text-sm text-gray-400 mt-1 pr-1'>
-            <StarIcon className='w-4 h-4 text-primary fill-primary' />
-            {show.movie.vote_average.toFixed(1)}
+            <p className='flex items-center gap-1 text-sm text-gray-300 mt-1 pr-1'>
+              <StarIcon className='w-4 h-4 text-primary fill-primary' />
+              {show.movie.vote_average.toFixed(1)}
             </p>
           </div>
-          <p className='px-2 pt-2 text-sm text-gray-500'>
-            {(() => {
-              const dateObj = new Date(show.showDateTime);
-              const weekday = dateObj.toLocaleString('en-US', { weekday: 'short' });
-              const day = dateObj.getDate();
-              const month = dateObj.toLocaleString('en-US', { month: 'short' });
-              const time = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-              return `${weekday}, ${day} ${month}, ${time}`;
-            })()}
+          <p className='px-2 pt-2 text-sm text-gray-300'>
+            <DateTimeFormat dateString={show.showDateTime} />
           </p>
-          </div>
+        </div>
         ))}
       </div>
 </div>
